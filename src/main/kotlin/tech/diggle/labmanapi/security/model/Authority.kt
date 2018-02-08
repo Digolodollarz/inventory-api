@@ -10,8 +10,8 @@ class Authority {
 
     @Id
     @Column(name = "ID")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "authority_seq")
-    @SequenceGenerator(name = "authority_seq", sequenceName = "authority_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+//    @SequenceGenerator(name = "authority_seq", sequenceName = "authority_seq", allocationSize = 1)
     var id: Long? = null
 
     @Column(name = "NAME", length = 50)

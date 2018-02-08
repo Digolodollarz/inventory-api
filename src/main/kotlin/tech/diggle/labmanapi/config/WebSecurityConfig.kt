@@ -17,6 +17,12 @@ import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import tech.diggle.labmanapi.security.JwtAuthenticationEntryPoint
 import tech.diggle.labmanapi.security.JwtAuthenticationTokenFilter
+import org.springframework.web.servlet.config.annotation.CorsRegistry
+import org.springframework.web.cors.CorsConfiguration
+
+
+
+
 
 @Configuration
 @EnableWebSecurity
@@ -60,23 +66,25 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 
                 .authorizeRequests()
-                //.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+
+                .antMatchers(HttpMethod.OPTIONS).permitAll()
 
                 // allow anonymous resource requests
-                .antMatchers(
-                        HttpMethod.GET,
-                        "/",
-                        "/*.html",
-                        "/favicon.ico",
-                        "/**/*.html",
-                        "/**/*.css",
-                        "/**/*.js"
-                ).permitAll()
+//                .antMatchers(
+//                        HttpMethod.GET,
+//                        "/",
+//                        "/*.html",
+//                        "/favicon.ico",
+//                        "/**/*.html",
+//                        "/**/*.css",
+//                        "/**/*.js"
+//                ).permitAll()
 
                 // Un-secure H2 Database
-                .antMatchers("/h2-console/**/**").permitAll()
+//                .antMatchers("/h2-console/**/**").permitAll()
 
                 .antMatchers("/auth/**").permitAll()
+//                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .anyRequest().authenticated()
 
         // Custom JWT based security filter
@@ -86,7 +94,14 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
         // disable page caching
         httpSecurity
                 .headers()
-                .frameOptions().sameOrigin()  // required to set for H2 else H2 Console will be blank.
+//                .frameOptions().sameOrigin()  // required to set for H2 else H2 Console will be blank.
                 .cacheControl()
+
+        httpSecurity.cors().configurationSource { request -> CorsConfiguration().applyPermitDefaultValues() }
+
+    }
+
+    fun addCorsMappings(registry: CorsRegistry) {
+        registry.addMapping("/**")
     }
 }

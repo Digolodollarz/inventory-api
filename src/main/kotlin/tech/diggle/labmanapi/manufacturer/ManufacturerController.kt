@@ -1,12 +1,13 @@
 package tech.diggle.labmanapi.manufacturer
 
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/api/manufacturer")
-class ManufacturerController {
-    @GetMapping()
-    fun getAll(): List<Manufacturer> {
+class ManufacturerController (val manufacturerRepository: ManufacturerRepository) {
+    @GetMapping("/dummy")
+    fun getAllDummy(): List<Manufacturer> {
         return listOf(
                 Manufacturer().apply {
                     id = 0
@@ -46,10 +47,18 @@ class ManufacturerController {
         )
     }
 
-    @PostMapping("/add")
+    @GetMapping()
+    fun getAll(): List<Manufacturer>{
+        return manufacturerRepository.findAll() as List<Manufacturer>
+    }
 
+
+    @PostMapping("")
+    @PreAuthorize("hasRole('ADMIN')")
     fun add(@RequestBody manufacturer: Manufacturer): Manufacturer {
-        manufacturer.id = 43
-        return manufacturer
+        if (manufacturer.title.isBlank())
+            throw IllegalArgumentException("Title cannot be null")
+        return manufacturerRepository.save(manufacturer)
+        //return manufacturer
     }
 }
