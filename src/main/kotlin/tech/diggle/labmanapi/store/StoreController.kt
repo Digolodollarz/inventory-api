@@ -2,6 +2,8 @@ package tech.diggle.labmanapi.store
 
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
+import tech.diggle.labmanapi.component.Component
+import tech.diggle.labmanapi.component.ComponentService
 
 @RestController
 @RequestMapping("/api/store")

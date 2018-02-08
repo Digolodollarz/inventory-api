@@ -1,6 +1,5 @@
-package tech.diggle.labmanapi.store
+package tech.diggle.labmanapi.component
 
-import com.sun.javaws.exceptions.InvalidArgumentException
 import org.springframework.stereotype.Service
 import tech.diggle.labmanapi.manufacturer.ManufacturerRepository
 
@@ -11,6 +10,7 @@ class ComponentServiceImpl(val componentRepo: ComponentRepository,
         return componentRepo.findOne(id)
     }
 
+    @Suppress("UNCHECKED_CAST")
     override fun getAll(): List<Component> {
         return componentRepo.findAll() as List<Component>
     }

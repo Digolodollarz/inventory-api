@@ -1,4 +1,4 @@
-package tech.diggle.labmanapi.store
+package tech.diggle.labmanapi.component
 
 import org.springframework.data.repository.CrudRepository
 
