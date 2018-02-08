@@ -10,6 +10,7 @@ interface ComponentService {
     fun get(id: Long): Component
 
     fun getAll(): List<Component>
+    fun getFiltered(queryText: String): List<Component>
     /**
      * Add a new component to the database
      * @param component Component to insert into database. Must be valid or throws exception

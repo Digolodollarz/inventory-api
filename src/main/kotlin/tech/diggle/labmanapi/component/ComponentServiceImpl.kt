@@ -25,6 +25,17 @@ class ComponentServiceImpl(val componentRepo: ComponentRepository,
         return componentRepo.save(component)
     }
 
+    override fun getFiltered(queryText: String): List<Component> {
+        val returnComponents: MutableList<Component> = mutableListOf()
+        returnComponents.addAll(componentRepo.findByPartNumberContainingIgnoreCase(queryText))
+        returnComponents.addAll(componentRepo.findByTitleContainingIgnoreCase(queryText))
+        returnComponents.addAll(componentRepo.findByTitleContainingIgnoreCase(queryText))
+        returnComponents.addAll(componentRepo.findByDescriptionContainingIgnoreCase(queryText))
+        returnComponents.addAll(componentRepo.findByManufacturerTitleContainingIgnoreCase(queryText))
+        returnComponents.addAll(componentRepo.findByPartTitleContainingIgnoreCase(queryText))
+        return returnComponents.distinct()
+    }
+
 
     override fun request(id: Long) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
