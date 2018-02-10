@@ -1,21 +1,10 @@
 package tech.diggle.labmanapi.security.model
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import java.util.Date
+import javax.persistence.*
 
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.FetchType
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
-import javax.persistence.JoinColumn
-import javax.persistence.JoinTable
-import javax.persistence.ManyToMany
-import javax.persistence.SequenceGenerator
-import javax.persistence.Table
-import javax.persistence.Temporal
-import javax.persistence.TemporalType
 import javax.validation.constraints.NotNull
 import javax.validation.constraints.Size
 
@@ -63,6 +52,7 @@ class User {
     @NotNull
     var lastPasswordResetDate: Date? = null
 
+    @JsonIgnoreProperties("users")
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "USER_AUTHORITY", joinColumns = arrayOf(JoinColumn(name = "USER_ID", referencedColumnName = "ID")), inverseJoinColumns = arrayOf(JoinColumn(name = "AUTHORITY_ID", referencedColumnName = "ID")))
     var authorities: List<Authority>? = null

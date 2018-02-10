@@ -11,15 +11,21 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @ControllerAdvice
 class RestResponseEntityExceptionHandler : ResponseEntityExceptionHandler() {
-    @ExceptionHandler(value = *arrayOf(IllegalArgumentException::class, IllegalStateException::class))
+    @ExceptionHandler(value = [(IllegalArgumentException::class), (IllegalStateException::class)])
     protected fun handleConflict(ex: RuntimeException, request: WebRequest): ResponseEntity<Any> {
-        val bodyOfResponse = ex
+        val bodyOfResponse = ex.message
         return handleExceptionInternal(ex, bodyOfResponse, HttpHeaders(), HttpStatus.CONFLICT, request)
     }
 
-    @ExceptionHandler(value = *arrayOf(BadCredentialsException::class))
+    @ExceptionHandler(value = [(BadCredentialsException::class)])
     protected fun invalidCredentials(ex: RuntimeException, request: WebRequest): ResponseEntity<Any> {
         val bodyOfResponse = "Invalid credentials"
         return handleExceptionInternal(ex, bodyOfResponse, HttpHeaders(), HttpStatus.UNAUTHORIZED, request)
     }
+
+//    @ExceptionHandler(value = *arrayOf(RuntimeException::class))
+//    protected fun exceptionHandler(ex: RuntimeException, request: WebRequest): ResponseEntity<Any>{
+//        val bodyOfResponse = ex.message
+//        return handleExceptionInternal(ex, bodyOfResponse, HttpHeaders(), HttpStatus.BAD_REQUEST, request)
+//    }
 }

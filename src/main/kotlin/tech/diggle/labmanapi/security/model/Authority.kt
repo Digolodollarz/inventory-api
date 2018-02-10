@@ -1,6 +1,7 @@
 package tech.diggle.labmanapi.security.model
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import javax.persistence.*
 import javax.validation.constraints.NotNull
 
@@ -19,6 +20,7 @@ class Authority {
     @Enumerated(EnumType.STRING)
     var name: AuthorityName? = null
 
+    @JsonIgnoreProperties("authorities")
     @ManyToMany(mappedBy = "authorities", fetch = FetchType.LAZY)
     var users: List<User>? = null
 }
