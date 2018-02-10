@@ -1,4 +1,4 @@
-package tech.diggle.labmanapi.access
+package tech.diggle.labmanapi.storage
 
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
