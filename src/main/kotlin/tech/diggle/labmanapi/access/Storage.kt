@@ -1,19 +1,15 @@
-package tech.diggle.labmanapi.part
+package tech.diggle.labmanapi.access
 
-import org.hibernate.validator.constraints.NotBlank
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
 import javax.persistence.Id
-import javax.validation.constraints.NotNull
 
 @Entity
-class Part {
+class Storage {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    var id: Long = 0
-
-    var number: String = ""
+    val id = 0
     var title: String = ""
-    var description: String? = null
+    var description: String = ""
 }

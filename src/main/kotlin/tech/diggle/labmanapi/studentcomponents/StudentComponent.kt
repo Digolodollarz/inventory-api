@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import tech.diggle.labmanapi.component.Component
 import javax.persistence.*
 
+@Entity
 class StudentComponent{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
