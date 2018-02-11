@@ -12,11 +12,14 @@ import tech.diggle.labmanapi.security.model.User
 import tech.diggle.labmanapi.security.repository.UserRepository
 import tech.diggle.labmanapi.security.service.JwtUserDetailsServiceImpl
 import tech.diggle.labmanapi.security.service.UserDetailServiceImpl
+import tech.diggle.labmanapi.student.Student
+import tech.diggle.labmanapi.student.StudentService
 
 import javax.servlet.http.HttpServletRequest
 
 @RestController
-class UserRestController {
+class UserRestController(
+        val studentService: StudentService) {
 
     @Value("\${jwt.header}")
     private val tokenHeader: String? = null
@@ -38,8 +41,15 @@ class UserRestController {
         return userDetailsService!!.loadUserByUsername(username) as JwtUser
     }
 
+    @RequestMapping("student/logged", method = [(RequestMethod.GET)])
+    fun getAuthenticatedStudent(request: HttpServletRequest): Student {
+        val token = request.getHeader(tokenHeader).substring(7)
+        val username = jwtTokenUtil!!.getUsernameFromToken(token)
+        return studentService.getByUsername(username)
+    }
+
     @GetMapping("user/{userName}")
-    fun getUser(@PathVariable userName: String): JwtUser{
+    fun getUser(@PathVariable userName: String): JwtUser {
         return userDetailsService!!.loadUserByUsername(userName) as JwtUser
     }
 

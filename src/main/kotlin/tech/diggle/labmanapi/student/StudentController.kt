@@ -4,7 +4,7 @@ import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("api/student")
+@RequestMapping("student")
 class StudentController(val studentService: StudentService) {
     @GetMapping
     fun getAll() = this.studentService.getAll()

@@ -5,6 +5,7 @@ import org.springframework.security.crypto.bcrypt.BCrypt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 import tech.diggle.labmanapi.security.model.Authority
+import tech.diggle.labmanapi.security.model.AuthorityName
 import tech.diggle.labmanapi.security.model.User
 import tech.diggle.labmanapi.security.repository.UserRepository
 import java.util.*
@@ -22,14 +23,14 @@ class UserDetailServiceImpl(val userRepository: UserRepository,
         if (user.email == null) throw NullPointerException("Email address cannot be null")
         if (user.enabled == null) user.enabled = true
         if (user.lastPasswordResetDate == null) user.lastPasswordResetDate = Date(1509494400)
-        user.authorities = user.authorities?.mapNotNull { authority ->
-            when {
-                authority.name != null -> authorityRepository.findByName(authority.name.toString())
-                authority.id != null -> authorityRepository.findOne(authority.id)
-                else -> null
-            }
-        }
 
+//        System.out.println(user.authorities)
+//        user.authorities?.forEach { auth -> System.out.println(auth) }
+        if (user.authorities != null)
+            user.authorities = user.authorities?.mapNotNull { authority ->
+                if (authority.id == null) null else authorityRepository.findOne(authority.id)
+            }
+        if (user.authorities == null || user.authorities!!.isEmpty()) throw IllegalArgumentException("User is useless")
         if (userRepository.findByUsername(user.username!!) != null) throw IllegalArgumentException("Username taken")
         return userRepository.save(user)
     }

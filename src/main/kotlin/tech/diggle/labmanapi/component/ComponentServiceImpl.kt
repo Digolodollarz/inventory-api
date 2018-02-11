@@ -22,6 +22,18 @@ class ComponentServiceImpl(val componentRepo: ComponentRepository,
         manufacturerRepository.findOne(component.manufacturer?.id)
                 ?: throw IllegalArgumentException("Manufacturer not found")
 
+        component.available = component.stock.toLong()
+
+        return componentRepo.save(component)
+    }
+
+    override fun update(component: Component): Component {
+        if (component.manufacturer == null)
+            throw NullPointerException("Manufacturer Id")
+
+        manufacturerRepository.findOne(component.manufacturer?.id)
+                ?: throw IllegalArgumentException("Manufacturer not found")
+
         return componentRepo.save(component)
     }
 

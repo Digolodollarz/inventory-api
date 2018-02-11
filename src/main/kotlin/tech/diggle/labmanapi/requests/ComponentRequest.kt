@@ -1,14 +1,18 @@
 package tech.diggle.labmanapi.requests
 
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
+import tech.diggle.labmanapi.component.Component
+import tech.diggle.labmanapi.student.Student
+import javax.persistence.*
 
 @Entity
 data class ComponentRequest(
-        val studentId: Long,
-        val componentId: Long
+        @ManyToOne
+        @JoinColumn(name = "student_id")
+        val student: Student,
+
+        @ManyToOne
+        @JoinColumn(name = "component_id")
+        val component: Component
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

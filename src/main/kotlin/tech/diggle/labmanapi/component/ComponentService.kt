@@ -16,6 +16,7 @@ interface ComponentService {
      * @param component Component to insert into database. Must be valid or throws exception
      */
     fun add(component: Component): Component
+    fun update(component: Component): Component
     fun request(id: Long)
     fun returnComponent(id: Long)
 }

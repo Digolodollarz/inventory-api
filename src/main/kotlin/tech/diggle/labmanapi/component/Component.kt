@@ -3,6 +3,7 @@ package tech.diggle.labmanapi.component
 import org.hibernate.validator.constraints.NotBlank
 import tech.diggle.labmanapi.manufacturer.Manufacturer
 import tech.diggle.labmanapi.part.Part
+import tech.diggle.labmanapi.storage.Storage
 import javax.persistence.*
 import javax.validation.constraints.NotNull
 
@@ -10,7 +11,7 @@ import javax.validation.constraints.NotNull
 class Component {
     @Id
     @Column(name = "ID")
-    @GeneratedValue(strategy =  GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -22,8 +23,6 @@ class Component {
     var title: String = ""
     var description: String = ""
 
-
-
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "manufacturer_id")
     @NotNull
@@ -32,5 +31,17 @@ class Component {
     var limits: Int = 0
     var stock: Int = 0
     var imageUrl: String = "/assets/img/F80-M3-1800x1200.jpg"
+    var available: Long = 0
+    var borrowed: Long = 0
+    var lost: Long = 0
+    var destroyed: Long = 0
+    var reserved: Long = 0
+    var userLimits: Long = 0
+    val isLimited: Boolean = false
+    val isRestricted: Boolean = false
+
+    @ManyToOne
+    @JoinColumn(name = "storage_id")
+    var storage: Storage? = null
 
 }

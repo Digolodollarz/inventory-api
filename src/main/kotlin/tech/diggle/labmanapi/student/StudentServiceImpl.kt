@@ -35,4 +35,8 @@ class StudentServiceImpl(val studentRepository: StudentRepository,
         return studentRepository.findAll() as List<Student>
     }
 
+    override fun getByUsername(username: String): Student {
+        return studentRepository.findByUserUsername(username)
+    }
+
 }

@@ -18,4 +18,8 @@ class ComponentController(val componentService: ComponentService) {
 
     @GetMapping("/{id}")
     fun get(@PathVariable id: Long) = componentService.get(id)
+
+    @PostMapping("{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    fun update(@RequestBody component: Component) = componentService.update(component)
 }

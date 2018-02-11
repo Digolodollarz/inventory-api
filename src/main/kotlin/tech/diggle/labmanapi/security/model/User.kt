@@ -30,12 +30,12 @@ class User {
 
     @Column(name = "FIRSTNAME", length = 50)
     @NotNull
-    @Size(min = 4, max = 50)
+    @Size(min = 2, max = 50)
     var firstname: String? = null
 
     @Column(name = "LASTNAME", length = 50)
     @NotNull
-    @Size(min = 4, max = 50)
+    @Size(min = 2, max = 50)
     var lastname: String? = null
 
     @Column(name = "EMAIL", length = 50)

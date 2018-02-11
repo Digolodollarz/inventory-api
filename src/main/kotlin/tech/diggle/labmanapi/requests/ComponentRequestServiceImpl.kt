@@ -1,6 +1,7 @@
 package tech.diggle.labmanapi.requests
 
 import org.springframework.stereotype.Service
+import tech.diggle.labmanapi.component.ComponentRepository
 import tech.diggle.labmanapi.stock.ItemRepository
 import tech.diggle.labmanapi.student.StudentRepository
 import tech.diggle.labmanapi.studentcomponents.StudentComponent
@@ -8,7 +9,7 @@ import tech.diggle.labmanapi.studentcomponents.StudentComponentRepository
 
 @Service
 class ComponentRequestServiceImpl(val componentRequests: ComponentRequestRepository,
-                                  val items: ItemRepository,
+                                  val components: ComponentRepository,
                                   val studentComponents: StudentComponentRepository) : ComponentRequestService {
     override fun getByStudentId(id: Long): List<ComponentRequest> {
         return this.componentRequests.getByStudentId(id)
@@ -19,43 +20,40 @@ class ComponentRequestServiceImpl(val componentRequests: ComponentRequestReposit
     }
 
     override fun add(request: ComponentRequest): ComponentRequest {
-        val item = items.getByComponentId(request.componentId)
-        if (item.available <= 0) throw IndexOutOfBoundsException(item.component.title)
+        val component = components.findOne(request.component.id)
+        if (component.available <= 0) throw IndexOutOfBoundsException(component.title)
 
-        val studentComponents = studentComponents.getByStudentId(request.studentId)
-        val studentItemCount = studentComponents.count { it.component.id == request.componentId }
-        if (item.userLimits in 1..studentItemCount) throw IndexOutOfBoundsException("Student exceeds limits")
+        val studentComponents = studentComponents.getByStudentId(request.student.id)
+        val studentItemCount = studentComponents.count { it.component.id == request.component.id }
+        if (component.userLimits in 1..studentItemCount) throw IndexOutOfBoundsException("Student exceeds limits")
         //TODO: Implement date limits;
 
-        item.available--
-//        if (item.component.consumable) item.borrowed++ else item.stock--
-        items.save(item)
-
-
+        component.available--
+        components.save(component)
 
         request.status = RequestStatus.OPEN
 
-        return if (item.isRestricted)
+        return if (component.isRestricted)
             this.componentRequests.save(request)
         else
             this.approve(this.componentRequests.save(request))
     }
 
     override fun approve(request: ComponentRequest): ComponentRequest {
-        val item = items.getByComponentId(request.componentId)
-        if (item.available <= 0) throw IndexOutOfBoundsException(item.component.title)
+        val component = components.findOne(request.component.id)
+        if (component.available < 0) throw IndexOutOfBoundsException(component.title)
 
-        if (item.component.consumable) item.borrowed++ else item.stock--
-        items.save(item)
+        if (component.consumable) component.stock-- else component.borrowed++
+        components.save(component)
 
-        val grantedStudentComponents = studentComponents.getByStudentId(request.studentId)
-        val studentItemCount = grantedStudentComponents.count { it.component.id == request.componentId }
-        if (item.userLimits in 1..studentItemCount) throw IndexOutOfBoundsException("Student exceeds limits")
+        val grantedStudentComponents = studentComponents.getByStudentId(request.student.id)
+        val studentItemCount = grantedStudentComponents.count { it.component.id == request.component.id }
+        if (component.userLimits in 1..studentItemCount) throw IndexOutOfBoundsException("Student exceeds limits")
 
         studentComponents.save(StudentComponent().apply {
-            component = item.component
+            component
             requestId = request.id
-            studentId = request.studentId
+            studentId = request.student.id
         })
 
         request.status = RequestStatus.GRANTED
@@ -63,9 +61,9 @@ class ComponentRequestServiceImpl(val componentRequests: ComponentRequestReposit
     }
 
     override fun deny(request: ComponentRequest): ComponentRequest {
-        val item = items.getByComponentId(request.componentId)
-        if (item.available + 1 <= item.stock) item.available++
-        items.save(item)
+        val component = components.findOne(request.component.id)
+        if (component.stock >= component.available + 1) component.available++
+
 
         request.status = RequestStatus.DENIED
         return componentRequests.save(request)

@@ -23,6 +23,15 @@ class RestResponseEntityExceptionHandler : ResponseEntityExceptionHandler() {
         return handleExceptionInternal(ex, bodyOfResponse, HttpHeaders(), HttpStatus.UNAUTHORIZED, request)
     }
 
+
+//    @ExceptionHandler(value = [(NullPointerException::class)])
+    protected fun nullPointer(ex: RuntimeException, request: WebRequest): ResponseEntity<Any> {
+        val bodyOfResponse = ex.message
+        return handleExceptionInternal(ex, bodyOfResponse, HttpHeaders(), HttpStatus.BAD_REQUEST, request)
+    }
+
+
+
 //    @ExceptionHandler(value = *arrayOf(RuntimeException::class))
 //    protected fun exceptionHandler(ex: RuntimeException, request: WebRequest): ResponseEntity<Any>{
 //        val bodyOfResponse = ex.message
