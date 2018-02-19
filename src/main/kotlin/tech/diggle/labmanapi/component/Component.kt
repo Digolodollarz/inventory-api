@@ -37,8 +37,8 @@ class Component {
     var destroyed: Long = 0
     var reserved: Long = 0
     var userLimits: Long = 0
-    val isLimited: Boolean = false
-    val isRestricted: Boolean = false
+    var limited: Boolean = false
+    var restricted: Boolean = false
 
     @ManyToOne
     @JoinColumn(name = "storage_id")

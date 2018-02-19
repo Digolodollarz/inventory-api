@@ -1,5 +1,5 @@
 package tech.diggle.labmanapi.requests
 
 enum class RequestStatus {
-    OPEN, GRANTED, DENIED
+    OPEN, GRANTED, DENIED, COLLECTED
 }

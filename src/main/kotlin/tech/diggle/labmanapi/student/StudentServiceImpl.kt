@@ -1,14 +1,25 @@
 package tech.diggle.labmanapi.student
 
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
+import tech.diggle.labmanapi.security.JwtTokenUtil
 import tech.diggle.labmanapi.security.repository.UserRepository
 import tech.diggle.labmanapi.security.service.UserDetailServiceImpl
-import java.util.*
+import javax.servlet.http.HttpServletRequest
 
 @Service
 class StudentServiceImpl(val studentRepository: StudentRepository,
                          val userRepository: UserRepository,
                          val userDetailServiceImpl: UserDetailServiceImpl) : StudentService {
+
+
+    @Value("\${jwt.header}")
+    private val tokenHeader: String? = null
+
+    @Autowired
+    private val jwtTokenUtil: JwtTokenUtil? = null
+
     override fun add(student: Student): Student {
         if(student.user.username.isNullOrEmpty()) throw NullPointerException("Username")
         if(student.studentId.isEmpty()) throw NullPointerException("Student Registration Number")
@@ -39,4 +50,9 @@ class StudentServiceImpl(val studentRepository: StudentRepository,
         return studentRepository.findByUserUsername(username)
     }
 
+    override fun getCurrent(request: HttpServletRequest): Student {
+        val token = request.getHeader(tokenHeader).substring(7)
+        val username = jwtTokenUtil!!.getUsernameFromToken(token)
+        return studentRepository.findByUserUsername(username)
+    }
 }

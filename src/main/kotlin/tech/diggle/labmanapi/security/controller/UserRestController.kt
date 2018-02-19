@@ -41,12 +41,12 @@ class UserRestController(
         return userDetailsService!!.loadUserByUsername(username) as JwtUser
     }
 
-    @RequestMapping("student/logged", method = [(RequestMethod.GET)])
-    fun getAuthenticatedStudent(request: HttpServletRequest): Student {
-        val token = request.getHeader(tokenHeader).substring(7)
-        val username = jwtTokenUtil!!.getUsernameFromToken(token)
-        return studentService.getByUsername(username)
-    }
+//    @RequestMapping("student/current", method = [(RequestMethod.GET)])
+//    fun getAuthenticatedStudent(request: HttpServletRequest): Student {
+//        val token = request.getHeader(tokenHeader).substring(7)
+//        val username = jwtTokenUtil!!.getUsernameFromToken(token)
+//        return studentService.getByUsername(username)
+//    }
 
     @GetMapping("user/{userName}")
     fun getUser(@PathVariable userName: String): JwtUser {

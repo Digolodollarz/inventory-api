@@ -13,23 +13,25 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 class RestResponseEntityExceptionHandler : ResponseEntityExceptionHandler() {
     @ExceptionHandler(value = [(IllegalArgumentException::class), (IllegalStateException::class)])
     protected fun handleConflict(ex: RuntimeException, request: WebRequest): ResponseEntity<Any> {
+        ex.printStackTrace()
         val bodyOfResponse = ex.message
         return handleExceptionInternal(ex, bodyOfResponse, HttpHeaders(), HttpStatus.CONFLICT, request)
     }
 
     @ExceptionHandler(value = [(BadCredentialsException::class)])
     protected fun invalidCredentials(ex: RuntimeException, request: WebRequest): ResponseEntity<Any> {
+        ex.printStackTrace()
         val bodyOfResponse = "Invalid credentials"
         return handleExceptionInternal(ex, bodyOfResponse, HttpHeaders(), HttpStatus.UNAUTHORIZED, request)
     }
 
 
-//    @ExceptionHandler(value = [(NullPointerException::class)])
+    //    @ExceptionHandler(value = [(NullPointerException::class)])
     protected fun nullPointer(ex: RuntimeException, request: WebRequest): ResponseEntity<Any> {
+        ex.printStackTrace()
         val bodyOfResponse = ex.message
         return handleExceptionInternal(ex, bodyOfResponse, HttpHeaders(), HttpStatus.BAD_REQUEST, request)
     }
-
 
 
 //    @ExceptionHandler(value = *arrayOf(RuntimeException::class))

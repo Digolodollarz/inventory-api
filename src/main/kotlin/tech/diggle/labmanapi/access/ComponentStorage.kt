@@ -1,14 +1,18 @@
 package tech.diggle.labmanapi.access
 
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
-import javax.persistence.OneToOne
+import tech.diggle.labmanapi.component.Component
+import tech.diggle.labmanapi.storage.Storage
+import javax.persistence.*
 
-class ComponentStorage{
+@Entity
+class ComponentStorage {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     val id: Long = 0
 
+    @OneToOne
+    var component: Component = Component()
 
+    @ManyToOne
+    var storage: Storage = Storage()
 }

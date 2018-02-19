@@ -1,4 +1,4 @@
-package tech.diggle.labmanapi.storage
+package tech.diggle.labmanapi.notifications
 
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
@@ -6,12 +6,12 @@ import javax.persistence.GenerationType
 import javax.persistence.Id
 
 @Entity
-class Storage {
+class Notification {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    val id = 0
-    var title: String = ""
-    var kind: String = ""
-    var description: String = ""
-    var state: StorageState = StorageState.EMPTY
+    val id: Long = 0
+    var subject: String = ""
+    var body: String = ""
+    var userId: Long = 0
+    var senderId: Long? = null
 }
