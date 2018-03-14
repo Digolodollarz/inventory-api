@@ -10,8 +10,8 @@ class Request {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     val id: Long = 0
-
+    var title: String = ""
+    var description: String = ""
     var status: RequestStatus = RequestStatus.OPEN
-
     var reason: String? = null
 }
