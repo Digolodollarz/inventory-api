@@ -7,10 +7,9 @@ import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.stereotype.Service;
 import tech.diggle.labmanapi.security.model.Authority;
 import tech.diggle.labmanapi.security.model.AuthorityName;
-import tech.diggle.labmanapi.security.model.User;
+import tech.diggle.labmanapi.security.user.User;
 
 //@Service
 public final class JwtUserFactory {

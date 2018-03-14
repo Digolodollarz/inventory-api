@@ -1,5 +1,6 @@
 package tech.diggle.labmanapi.notifications
 
+import java.util.*
 import javax.persistence.Entity
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType
@@ -14,4 +15,7 @@ class Notification {
     var body: String = ""
     var userId: Long = 0
     var senderId: Long? = null
+    var viewed: Boolean = false
+    var dateCreated: Date = Date()
+    var dateViewed: Date? = null
 }

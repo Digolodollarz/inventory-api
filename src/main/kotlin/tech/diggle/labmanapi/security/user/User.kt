@@ -1,7 +1,8 @@
-package tech.diggle.labmanapi.security.model
+package tech.diggle.labmanapi.security.user
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import tech.diggle.labmanapi.security.model.Authority
 import java.util.Date
 import javax.persistence.*
 

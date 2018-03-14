@@ -1,12 +1,8 @@
 package tech.diggle.labmanapi.security.service
 
-import com.sun.javaws.exceptions.InvalidArgumentException
-import org.springframework.security.crypto.bcrypt.BCrypt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
-import tech.diggle.labmanapi.security.model.Authority
-import tech.diggle.labmanapi.security.model.AuthorityName
-import tech.diggle.labmanapi.security.model.User
+import tech.diggle.labmanapi.security.user.User
 import tech.diggle.labmanapi.security.repository.UserRepository
 import java.util.*
 

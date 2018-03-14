@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service
 import tech.diggle.labmanapi.security.JwtUser
 import tech.diggle.labmanapi.security.JwtUserFactory
 import tech.diggle.labmanapi.security.model.Authority
-import tech.diggle.labmanapi.security.model.User
+import tech.diggle.labmanapi.security.user.User
 import tech.diggle.labmanapi.security.repository.UserRepository
 import java.util.*
 
@@ -30,7 +30,7 @@ class JwtUserDetailsServiceImpl : UserDetailsService {
         }
     }
 
-    fun createUser(usr: JwtUser): User{
+    fun createUser(usr: JwtUser): User {
         val user: User = User().apply {
             username = usr.username
             firstname = usr.firstname

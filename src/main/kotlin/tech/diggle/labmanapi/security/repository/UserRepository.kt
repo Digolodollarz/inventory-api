@@ -2,7 +2,7 @@ package tech.diggle.labmanapi.security.repository
 
 
 import org.springframework.data.jpa.repository.JpaRepository
-import tech.diggle.labmanapi.security.model.User
+import tech.diggle.labmanapi.security.user.User
 
 /**
  * Created by stephan on 20.03.16.

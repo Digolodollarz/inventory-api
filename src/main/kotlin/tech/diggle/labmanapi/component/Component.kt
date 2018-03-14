@@ -40,8 +40,5 @@ class Component {
     var limited: Boolean = false
     var restricted: Boolean = false
 
-    @ManyToOne
-    @JoinColumn(name = "storage_id")
-    var storage: Storage? = null
 
 }

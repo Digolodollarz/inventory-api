@@ -1,7 +1,7 @@
 package tech.diggle.labmanapi.access
 
-import tech.diggle.labmanapi.component.Component
+import tech.diggle.labmanapi.storage.Storage
 
 interface StorageAccess {
-    fun grantAccess(component: Component): Boolean
+    fun grantAccess(storage: Storage): Boolean
 }

@@ -20,10 +20,6 @@ import tech.diggle.labmanapi.security.JwtAuthenticationTokenFilter
 import org.springframework.web.servlet.config.annotation.CorsRegistry
 import org.springframework.web.cors.CorsConfiguration
 
-
-
-
-
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)

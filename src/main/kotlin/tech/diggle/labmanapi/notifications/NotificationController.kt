@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import tech.diggle.labmanapi.security.JwtTokenUtil
 import tech.diggle.labmanapi.security.repository.UserRepository
-import tech.diggle.labmanapi.student.StudentService
 import javax.servlet.http.HttpServletRequest
 
 @RestController

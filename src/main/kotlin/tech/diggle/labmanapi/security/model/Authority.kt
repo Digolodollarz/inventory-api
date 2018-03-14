@@ -2,6 +2,7 @@ package tech.diggle.labmanapi.security.model
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import tech.diggle.labmanapi.security.user.User
 import javax.persistence.*
 import javax.validation.constraints.NotNull
 
