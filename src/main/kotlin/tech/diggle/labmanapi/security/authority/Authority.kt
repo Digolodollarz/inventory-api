@@ -1,4 +1,4 @@
-package tech.diggle.labmanapi.security.model
+package tech.diggle.labmanapi.security.authority
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
