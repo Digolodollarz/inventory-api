@@ -4,6 +4,7 @@ import org.hibernate.validator.constraints.NotBlank
 import tech.diggle.inventory.api.stock.component.Component
 import tech.diggle.inventory.api.stock.manufacturer.Manufacturer
 import tech.diggle.inventory.api.stock.part.Part
+import tech.diggle.inventory.api.storage.Storage
 import javax.persistence.*
 import javax.validation.constraints.NotNull
 
@@ -14,30 +15,23 @@ class Item {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "part_id")
-    var part: Part? = null
+    var partNumber: String? = null
 
     @NotBlank
-    var title: String = ""
+    var name: String = ""
     @NotBlank
     var description: String = ""
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "manufacturer_id")
-    var manufacturer: Manufacturer? = null
-
+    var manufacturer: String? = null
     var consumable: Boolean = false
-    var limits: Int? = null
-    var stock: Int = 0
-    var imageUrl: String? = null
-    var available: Long = 0
-    var borrowed: Long = 0
-    var lost: Long = 0
-    var destroyed: Long = 0
-    var reserved: Long = 0
-    var userLimits: Long = 0
+    var availableStock: Int = 0
+    var takenStock: Int = 0
+    var totalStock: Int = 0
+    var lostStock: Int = 0
+    var imageUrl: String = "/assets/img/F80-M3-1800x1200.jpg"
     var limited: Boolean = false
+    var limits: Int? = null
     var restricted: Boolean = false
 
+    @ManyToOne
+    var storage: Storage? = null
 }

@@ -17,9 +17,9 @@ spring:
    # driverClassName: org.h2.Driver
    # username: sa
    # password:
-   url: jdbc:mysql://localhost:3306/db_demo
+   url: jdbc:mysql://localhost:3306/db_store
    username: dbuser
-   password:
+   password: pass123
 
   jpa:
     #database-platform: org.hibernate.dialect.

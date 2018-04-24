@@ -7,8 +7,11 @@ import java.util.*
 @RequestMapping("api/item")
 class ItemController(val itemService: ItemService) {
     @GetMapping
-    fun getAll(@RequestParam("queryText") queryText: Optional<String>): List<Item> =
-            if (queryText.isPresent) itemService.getFiltered(queryText.get()) else itemService.getAll()
+    fun getAll(@RequestParam("queryText") queryText: Optional<String>,
+               @RequestParam("page") page: Optional<Int>,
+               @RequestParam("size") size: Optional<Int>): List<Item> =
+            if (queryText.isPresent) itemService.getFiltered(queryText.get())
+            else itemService.getPaged(page.orElse(null), size.orElse(null))
 
     @PostMapping
     fun add(@RequestBody item: Item): Item = itemService.add(item)

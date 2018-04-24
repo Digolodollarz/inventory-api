@@ -11,7 +11,7 @@ import tech.diggle.inventory.api.security.jwt.JwtUser
 import javax.servlet.http.HttpServletRequest
 
 @RestController
-class UserRestController {
+class UserRestController(@Autowired val repository: UserRepository) {
 
     @Value("\${jwt.header}")
     private val tokenHeader: String? = null
@@ -50,6 +50,12 @@ class UserRestController {
     fun addUser(@RequestBody user: User): JwtUser {
         val usr = userDetailService!!.create(user)
         return userDetailsService!!.loadUserByUsername(usr.username) as JwtUser
+    }
+
+    @GetMapping("users")
+    @PreAuthorize("hasRole('ADMIN')")
+    fun listUsers(): List<User> {
+        return repository.findAll()
     }
 
 }
