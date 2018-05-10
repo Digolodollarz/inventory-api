@@ -17,7 +17,7 @@ class User {
     @Column(name = "ID")
     @GeneratedValue(strategy = GenerationType.AUTO)
 //    @SequenceGenerator(name = "user_seq", sequenceName = "user_seq", allocationSize = 1)
-    var id: Long? = null
+    var id: Long = 0
 
     @Column(name = "USERNAME", length = 50, unique = true)
     @NotNull

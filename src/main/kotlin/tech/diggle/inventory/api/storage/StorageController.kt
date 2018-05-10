@@ -11,6 +11,11 @@ class StorageController(val storageService: StorageService) {
     @PostMapping
     fun add(@RequestBody storage: Storage): Storage = storageService.add(storage)
 
+    @GetMapping("/get/{requestId}")
+    fun getItem(@PathVariable requestId: Long): String {
+        return "Zvaita!"
+    }
+
     @GetMapping("{id}")
     fun get(@PathVariable id: Long): Storage = storageService.get(id)
 
