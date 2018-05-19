@@ -8,6 +8,7 @@ interface RequestService {
     fun update(request: Request): Request
     fun getUserRequests(userId: Long): List<Request>
     fun approveRequest(request: Request): Request
+    fun denyRequest(request: Request): Request
     fun getMyRequests(request: HttpServletRequest) : List<Int>
-    fun getRequests(request: HttpServletRequest) : List<Int>
+    fun getRequests(request: HttpServletRequest) : List<Request>
 }

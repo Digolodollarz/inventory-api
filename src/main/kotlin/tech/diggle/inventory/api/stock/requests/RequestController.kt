@@ -1,6 +1,7 @@
 package tech.diggle.inventory.api.stock.requests
 
 import org.springframework.web.bind.annotation.*
+import java.util.*
 import javax.servlet.http.HttpServletRequest
 
 @RestController
@@ -42,8 +43,20 @@ class RequestController(val service: RequestService) {
      */
 
     @GetMapping("/all")
-    fun getRequests(request: HttpServletRequest): List<Int> {
+    fun getRequests(request: HttpServletRequest): List<Request> {
         return service.getRequests(request)
+    }
+
+    @PostMapping("{requestId}")
+    fun approveRequest(@PathVariable requestId: Int,
+                       @RequestBody req: Request,
+                       @RequestParam("reason") reason: Optional<String>,
+                       @RequestParam("approve") approve: Boolean): Request {
+        if (approve)
+            return service.approveRequest(req)
+        if (reason.isPresent)
+            req.reason = reason.get()
+        return service.denyRequest(req)
     }
 
 

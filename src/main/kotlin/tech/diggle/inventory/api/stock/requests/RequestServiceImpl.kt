@@ -52,6 +52,11 @@ class RequestServiceImpl(@Autowired
         return this.repository.save(request)
     }
 
+    override fun denyRequest(request: Request): Request {
+        request.status = RequestStatus.DENIED
+        return this.repository.save(request)
+    }
+
     override fun getMyRequests(request: HttpServletRequest): List<Int> {
         val token = request.getHeader(tokenHeader).substring(7)
         val username = jwtTokenUtil.getUsernameFromToken(token)
@@ -63,14 +68,14 @@ class RequestServiceImpl(@Autowired
         return diezer
     }
 
-    override fun getRequests(request: HttpServletRequest): List<Int> {
+    override fun getRequests(request: HttpServletRequest): List<Request> {
         val token = request.getHeader(tokenHeader).substring(7)
         val username = jwtTokenUtil.getUsernameFromToken(token)
         val userId = userRepository.findByUsername(username).id
-        val diezer = mutableListOf<Int>()
-        diezer.add(repository.findByStatusAndUserId(RequestStatus.OPEN, userId).size)
-        diezer.add(repository.findByStatusAndUserId(RequestStatus.GRANTED, userId).size)
-        diezer.add(repository.findByStatusAndUserId(RequestStatus.DENIED, userId).size)
-        return diezer
+        val diezer = mutableListOf<Request>()
+//        diezer.add(repository.findByStatusAndUserId(RequestStatus.OPEN, userId))
+//        diezer.add(repository.findByStatusAndUserId(RequestStatus.GRANTED, userId))
+//        diezer.add(repository.findByStatusAndUserId(RequestStatus.DENIED, userId))
+        return repository.findByStatus(RequestStatus.OPEN)
     }
 }
